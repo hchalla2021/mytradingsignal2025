@@ -32,22 +32,150 @@ logger = logging.getLogger(__name__)
 
 @app.get("/")
 async def root():
-    """Root endpoint - API information"""
-    return {
-        "service": "Market Signals API - Live Zerodha",
-        "version": "2.0.0",
-        "status": "running",
-        "endpoints": {
-            "health": "/health",
-            "signal": "/api/signal?symbol=NIFTY",
-            "connection": "/api/connection",
-            "symbols": "/api/symbols",
-            "status": "/api/status",
-            "auth_login": "/auth/login",
-            "docs": "/docs"
-        },
-        "documentation": "https://mytradingsignal2025-6.onrender.com/docs"
-    }
+    """Root endpoint - Redirect to API docs"""
+    from fastapi.responses import HTMLResponse
+    
+    html_content = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Market Signals API</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+                color: #e2e8f0;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+            .container {
+                max-width: 800px;
+                padding: 3rem;
+                text-align: center;
+            }
+            h1 {
+                font-size: 3rem;
+                font-weight: 800;
+                background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin-bottom: 1rem;
+            }
+            .status {
+                display: inline-block;
+                padding: 0.75rem 1.5rem;
+                background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+                color: #d1fae5;
+                border-radius: 0.75rem;
+                font-weight: 700;
+                margin: 1rem 0;
+            }
+            .endpoints {
+                background: rgba(30, 41, 59, 0.7);
+                border: 2px solid #3b82f6;
+                border-radius: 1rem;
+                padding: 2rem;
+                margin: 2rem 0;
+                text-align: left;
+            }
+            .endpoint {
+                margin: 1rem 0;
+                padding: 1rem;
+                background: rgba(15, 23, 42, 0.8);
+                border-radius: 0.5rem;
+            }
+            .endpoint-label {
+                color: #94a3b8;
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+            }
+            .endpoint-url {
+                color: #60a5fa;
+                font-family: monospace;
+                font-size: 0.95rem;
+                margin-top: 0.5rem;
+            }
+            a {
+                color: #60a5fa;
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            .btn {
+                display: inline-block;
+                padding: 1rem 2rem;
+                background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+                color: white;
+                border-radius: 0.75rem;
+                font-weight: 700;
+                margin: 1rem 0.5rem;
+                text-decoration: none;
+                transition: transform 0.2s;
+            }
+            .btn:hover {
+                transform: translateY(-2px);
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🚀 Market Signals API</h1>
+            <div class="status">✅ Live & Running</div>
+            <p style="font-size: 1.2rem; color: #cbd5e1; margin: 2rem 0;">
+                Trading signals with live Zerodha data, Greeks calculation, and option chain analysis
+            </p>
+            
+            <div style="margin: 2rem 0;">
+                <a href="/docs" class="btn">📚 API Documentation</a>
+                <a href="/api/signal?symbol=NIFTY" class="btn">📊 Get Signal</a>
+            </div>
+
+            <div class="endpoints">
+                <h3 style="color: #e2e8f0; margin-top: 0;">Available Endpoints</h3>
+                
+                <div class="endpoint">
+                    <div class="endpoint-label">📊 Get Trading Signal</div>
+                    <div class="endpoint-url"><a href="/api/signal?symbol=NIFTY">/api/signal?symbol=NIFTY</a></div>
+                </div>
+                
+                <div class="endpoint">
+                    <div class="endpoint-label">🔗 Connection Status</div>
+                    <div class="endpoint-url"><a href="/api/connection">/api/connection</a></div>
+                </div>
+                
+                <div class="endpoint">
+                    <div class="endpoint-label">❤️ Health Check</div>
+                    <div class="endpoint-url"><a href="/health">/health</a></div>
+                </div>
+                
+                <div class="endpoint">
+                    <div class="endpoint-label">📋 Available Symbols</div>
+                    <div class="endpoint-url"><a href="/api/symbols">/api/symbols</a></div>
+                </div>
+                
+                <div class="endpoint">
+                    <div class="endpoint-label">🔐 Zerodha Login</div>
+                    <div class="endpoint-url"><a href="/auth/login">/auth/login</a></div>
+                </div>
+            </div>
+
+            <p style="color: #64748b; font-size: 0.9rem;">
+                Version 2.0.0 | FastAPI + Zerodha KiteConnect
+            </p>
+        </div>
+    </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content)
 
 
 @app.get("/health")
