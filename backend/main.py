@@ -30,6 +30,26 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+@app.get("/")
+async def root():
+    """Root endpoint - API information"""
+    return {
+        "service": "Market Signals API - Live Zerodha",
+        "version": "2.0.0",
+        "status": "running",
+        "endpoints": {
+            "health": "/health",
+            "signal": "/api/signal?symbol=NIFTY",
+            "connection": "/api/connection",
+            "symbols": "/api/symbols",
+            "status": "/api/status",
+            "auth_login": "/auth/login",
+            "docs": "/docs"
+        },
+        "documentation": "https://mytradingsignal2025-6.onrender.com/docs"
+    }
+
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint."""

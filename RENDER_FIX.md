@@ -27,6 +27,25 @@ Backend returning `{"detail":"Not Found"}` due to incorrect working directory in
 - **pandas**: `2.0.3` (stable Python 3.11 support, no Cython issues)
 - **numpy**: `1.24.3` (compatible with pandas 2.0.3)
 
+### 5. Startup Script Fix (`scripts/start-render.sh`) - CRITICAL FOR 404 FIX
+- Created proper startup script that changes to backend directory
+- Sets PYTHONPATH to include current directory
+- Updated `render.yaml` startCommand from inline to: `bash scripts/start-render.sh`
+- **This fixes the "Not Found" 404 error**
+
+## Files Modified Summary
+
+```
+✅ .python-version                → 3.11.9
+✅ runtime.txt                    → python-3.11.9
+✅ render.yaml                    → PYTHON_VERSION=3.11.9, new startCommand
+✅ scripts/render-build.sh        → Version check + pip upgrade
+✅ scripts/start-render.sh        → NEW: Proper PYTHONPATH setup
+✅ requirements.txt               → pandas 2.0.3, numpy 1.24.3
+✅ backend/requirements.txt       → pandas 2.0.3, numpy 1.24.3
+✅ backend/requirements-prod.txt  → pandas 2.0.3, numpy 1.24.3
+```
+
 ## Render Dashboard Manual Steps (If Still Failing)
 
 If deployment still uses Python 3.13:
