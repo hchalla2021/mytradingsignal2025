@@ -1,0 +1,50 @@
+services:{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    autoDeploy: true        value: "18.17.0"      - key: NODE_VERSION        sync: false      - key: NEXT_PUBLIC_BACKEND_URL    envVars:    startCommand: "cd frontend && npm start"    buildCommand: "cd frontend && npm install && npm run build"    plan: free    region: singapore    env: node    name: market-signals-frontend  - type: web  # Frontend Static Site    autoDeploy: true    healthCheckPath: /health        value: "3.11.0"      - key: PYTHON_VERSION        sync: false      - key: REDIRECT_URL        value: 9qlzwmum5f7pami0gacyxc7uxa6w823s      - key: ZERODHA_API_SECRET        value: g5tyrnn1mlckrb6f      - key: ZERODHA_API_KEY    envVars:    startCommand: "cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT"    buildCommand: "pip install -r backend/requirements.txt"    plan: free    region: singapore    env: python    name: market-signals-backend  - type: web  # Backend API Service  "version": 2,
+  "builds": [
+    {
+      "src": "backend/main.py",
+      "use": "@render/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "backend/main.py"
+    }
+  ]
+}
