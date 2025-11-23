@@ -19,7 +19,7 @@ services:
         value: "3.11.9"
     autoDeploy: true
 
-  # Frontend Service (THIS IS THE ONE TO ACCESS)
+  # Frontend Service - Access this URL for the web app
   - type: web
     name: market-signals-frontend
     env: node
