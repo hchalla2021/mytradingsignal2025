@@ -27,7 +27,10 @@ services:
     startCommand: "cd frontend && npm start"
     envVars:
       - key: NEXT_PUBLIC_BACKEND_URL
-        sync: false
+        fromService:
+          type: web
+          name: market-signals-backend
+          property: host
       - key: NODE_VERSION
         value: "18.17.0"
     autoDeploy: true
