@@ -1,4 +1,5 @@
 services:
+  # Backend API Service
   - type: web
     name: market-signals-backend
     env: python
@@ -18,6 +19,7 @@ services:
         value: "3.11.9"
     autoDeploy: true
 
+  # Frontend Service (THIS IS THE ONE TO ACCESS)
   - type: web
     name: market-signals-frontend
     env: node
@@ -27,10 +29,7 @@ services:
     startCommand: "cd frontend && npm start"
     envVars:
       - key: NEXT_PUBLIC_BACKEND_URL
-        fromService:
-          type: web
-          name: market-signals-backend
-          property: host
+        value: https://market-signals-backend.onrender.com
       - key: NODE_VERSION
         value: "18.17.0"
     autoDeploy: true
